@@ -1,0 +1,63 @@
+{
+  "form_inputs": [
+    {
+      "label": "Person name",
+      "name": "person_name",
+      "type": "text",
+      "value": null,
+      "rules": "required:true|min:3|max:64",
+      "options": [],
+      "default_value": null,
+      "multiple": false,
+      "readonly": false,
+      "placeholder": "Person name",
+      "errorMessage": "Error: Please check that the name is between 2 and 64 characters",
+      "info": "Example value of how to fill the input"
+    },
+    {
+      "label": "Person age",
+      "name": "person_age",
+      "type": "number",
+      "value": null,
+      "rules": "required:true|min:10|max:100",
+      "options": [],
+      "default_value": null,
+      "multiple": false,
+      "readonly": false,
+      "placeholder": "Person age",
+      "errorMessage": "Error: Please check that the age is between 10 and 100",
+      "info": "Example value of how to fill the input"
+    },
+    {
+      "label": "Country",
+      "name": "country",
+      "type": "select",
+      "value": null,
+      "rules": "required:true|min:2|max:64",
+      "options": [
+        { "label": "Albania", "value": "albania" },
+        { "label": "Italy", "value": "italy" }
+      ],
+      "default_value": "albania",
+      "multiple": false,
+      "readonly": false,
+      "placeholder": "select",
+      "errorMessage": "Error: Please select a country",
+      "info": "Example value of how to fill the input"
+    },
+    {
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "value": null,
+      "rules": "required:true|min:15|max:300",
+      "options": [],
+      "default_value": null,
+      "multiple": false,
+      "readonly": false,
+      "placeholder": "Description",
+      "errorMessage": "Error: Please check that your description is between 15 to 300 chatacters",
+      "info": "Example value of how to fill the input"
+    }
+  ]
+}
