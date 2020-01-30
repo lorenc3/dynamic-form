@@ -1,6 +1,6 @@
 *Click the image below for a preview video:*
 
-[![form](https://imgur.com/a/TVNK46n)](https://streamable.com/3aq86)
+[![form](https://i.imgur.com/o3KwAV1.png)](https://streamable.com/3aq86)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
