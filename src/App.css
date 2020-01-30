@@ -16,7 +16,6 @@ textarea {
   justify-content: center;
   align-items: center;
   text-align: center;
-  /* border: 2px solid red; */
 }
 
 .form {
@@ -27,9 +26,7 @@ textarea {
   border-radius: 20px;
   width: 600px;
   padding: 20px 0px 20px 0px;
-  /* height: 100%; */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  /* border: 2px solid red; */
 }
 
 .inputBox {
@@ -38,12 +35,9 @@ textarea {
   align-items: center;
   margin: 12px 0px 12px 0px;
   width: 80%;
-  /* height: 40px; */
-  /* border: 2px solid blue; */
 }
 
 .formBox {
-  /* display: flex; */
   margin-left: 20px;
   background: none;
   outline: none;
@@ -78,7 +72,6 @@ textarea {
   flex-direction: column;
   text-align: start;
   width: 80%;
-  /* border: 2px solid red; */
 }
 
 .errText {

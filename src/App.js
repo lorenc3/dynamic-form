@@ -11,11 +11,10 @@ class App extends Component {
       loading: true,
       success: ""
     };
-    this.renderError = this.renderError.bind(this);
   }
 
   componentDidMount() {
-    //Getting the results and updating state
+    //Getting the results and updating state.
     fetch("https://api.myjson.com/bins/1gax86")
       .then(res => res.json())
       .then(
@@ -24,6 +23,7 @@ class App extends Component {
             data: result.form_inputs,
             loading: false
           });
+          //Setting dynamic state props and values based on the result.
           this.setDynamicState(result.form_inputs);
         },
         error => {
@@ -33,8 +33,8 @@ class App extends Component {
   }
 
   setDynamicState = data => {
-    //Assumption that the rules prop maintains the same format
-    //Can be easily modified if the rules prop changes format
+    //Assumption that the rules prop maintains the same format.
+    //Can be easily modified if the rules prop changes format.
     data.map(item => {
       const rulesObj = {};
       const rules = item.rules.split("|");
@@ -43,13 +43,11 @@ class App extends Component {
         let val = item.split(":")[1];
         rulesObj[prop] = val;
       });
-      //Setting dynamic state props based on the item
+      //Setting dynamic state props based on the item.
       this.setState({
         [`${item.name}`]: item.value,
         [`${item.name}Rules`]: rulesObj,
-        [`${item.name}Error`]: {
-          showError: false
-        }
+        [`${item.name}Error`]: false
       });
     });
   };
@@ -57,23 +55,21 @@ class App extends Component {
   submitServer = () => {
     const { data } = this.state;
     this.setState({ success: "" });
-    let errors = false;
-    this.validate();
+    //Validating as per the rule set and checking for errors.
+    const errors = this.validate();
+    //Creating the data object that we will send in the POST req.
     const dataObj = {};
     data.map(item => {
       dataObj[item.name] = this.state[item.name];
-      const error = this.state[`${item.name}Error`];
-      if (error) {
-        errors = true;
-      }
     });
-    if (errors === false) {
+    if (!errors) {
+      //If no errors setting a loading state which disables buttons and inputs.
+      //Setting a timeout of 1 sec to simulate time of post req and to
+      //show the disabled form and button.
       this.setState({ loading: true });
-      //Setting a timeout to emulate time of post req and to
-      //show the diabled form and button
       setTimeout(() => {
-        // text with 2 endpoints: Success(201)--> 'https://reqres.in/api/data'
-        //Unsucceful(404,400 ...) --> 'https://reqres.in/'
+        //Tested with 2 endpoints: Success(201)--> 'https://reqres.in/api/data'
+        //Unsuccesful(404,400 ...) --> 'https://reqres.in/'
         fetch("https://reqres.in/api/data", {
           method: "POST",
           headers: {
@@ -97,23 +93,28 @@ class App extends Component {
             }
           })
           .catch(err => console.log(err));
-      }, 3000);
+      }, 1000);
     }
   };
 
-  renderError(item) {
+  renderError = item => {
+    //Checks for errors of every item and updates the form with error messages
+    //when errors are found, otherwise no changes.
     const error = this.state[`${item.name}Error`];
-    if (error === true) {
+    if (error) {
       return <p className="errText">{item.errorMessage}</p>;
     }
     return null;
-  }
+  };
 
   validate = () => {
     const { data } = this.state;
-    data.map(item => {
-      //Formatting the rules prop and validating the item
-      //value
+    //Initially no errors.
+    let hasErrors = false;
+    data.forEach(item => {
+      //Formatting the rules prop and validating the item value
+      //for dynamic input types: text or number.
+      //Can be easily updated for any aditional input types
       let itemVal = this.state[item.name];
       let rules = this.state[`${item.name}Rules`];
       let isRequired = rules.required === "true";
@@ -128,26 +129,33 @@ class App extends Component {
         this.setState({
           [`${item.name}Error`]: true
         });
+        //If an error is found return true and the POST req will not be performed.
+        hasErrors = true;
       } else {
         this.setState({
           [`${item.name}Error`]: false
         });
       }
     });
+    return hasErrors;
   };
 
   handleChange = (event, name) => {
+    //Change func for the dynamic input val
     this.setState({ [`${name}`]: event.target.value });
   };
 
   renderInputs = item => {
+    //Rendering all supported inputs as asked for in the task(text, select, number, textarea).
+    //Can be easily updated to support any of the input types.
     const { loading } = this.state;
     switch (item.type) {
       case "text":
         return (
           <input
             onChange={ev => this.handleChange(ev, item.name)}
-            //if the state prop specified is undefined at first
+            //If the state prop specified is undefined at first to prevent
+            //input no-undefined error
             value={this.state[item.name] || ""}
             style={{ opacity: loading ? 0.5 : 1 }}
             type={item.type}
@@ -176,7 +184,6 @@ class App extends Component {
             })}
           </select>
         );
-      //include in type text since only type changes
       case "number":
         return (
           <input
@@ -200,6 +207,7 @@ class App extends Component {
             className="formBox"
             style={{
               height: 100,
+              paddingTop: 5,
               resize: "vertical",
               maxHeight: 300,
               minHeight: 100,
@@ -218,6 +226,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="form">
+          <h3>Personal Information</h3>
           {data.map(item => {
             return (
               <div className="inputBox" key={item.name}>
@@ -237,7 +246,7 @@ class App extends Component {
             Save
           </button>
         </div>
-        <p style={{ color: success === "Succesful" ? "green" : "red" }}>
+        <p style={{ color: success === "Succesful" ? "#22bb33" : "red" }}>
           {success}
         </p>
       </div>
